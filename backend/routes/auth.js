@@ -10,7 +10,7 @@ router.post('/',[
   body('email','Enter a valid name').isEmail(),
   // password must be at least 5 chars long
   body('password','pass must be atleast 5 char').isLength({ min: 5 })
-],(req,res)=>{
+],async (req,res)=>{
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -19,12 +19,22 @@ router.post('/',[
     console.log(req.body);
     // const user=User(req.body);
     // user.save();
-    User.create({
+    try{
+    let user=await User.findOne({email:req.body.email});
+    if(user){
+      return res.status(400).json({error:"Sorry user with this email already exists"})
+    }
+
+      user=await User.create({
         name: req.body.name,
         email:req.body.email,
         password: req.body.password,
       }).then(user => res.json(user));
     // res.json([]);
+    }catch(error){
+      console.error(error.message);
+      res.status(500).send("some error occurred");
+    }
 })
 
 module.exports=router;

@@ -1,12 +1,12 @@
 const express = require('express')
 const app = express()
 const connectToMongo=require('./db');
-const port = 3000
+const port = 5000;
 connectToMongo();
 
 app.use(express.json())
 //Availaible routes
-app.use('/api/auth',require('./routes/auth'));
+app.use('/api/auth/createuser',require('./routes/auth'));
 app.use('/api/notes',require('./routes/notes'));
 
 app.get('/', (req, res) => {
