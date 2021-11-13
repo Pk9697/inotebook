@@ -6,7 +6,7 @@ connectToMongo();
 //for reading req.body
 app.use(express.json())
 //Availaible routes
-app.use('/api/auth/createuser',require('./routes/auth'));
+app.use('/api/auth',require('./routes/auth'));
 app.use('/api/notes',require('./routes/notes'));
 
 app.get('/', (req, res) => {
