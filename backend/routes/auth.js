@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const JWT_SECRET='CodeWithHarry';
+const fetchuser=require('../middleware/fetchuser');
 //create a user using:POST "/api/auth/createuser".Doesn't require auth
 router.post('/createuser',[
   body('name','Enter a valid name').isLength({ min: 3 }),
@@ -83,6 +84,20 @@ router.post('/login',[
     // res.json(user);
     res.json({authToken});
 
+  }catch(error){
+    console.error(error.message);
+    res.status(500).send("some error occurred");
+  }
+})
+
+
+
+//ROUTE3: GET LOGGEDIN USER DETAILS using: POST "/api/auth/getuser". Login required
+router.post('/getuser',fetchuser,async (req,res)=>{
+  try{
+    const userId=req.user.id;
+    const user=await User.findById(userId).select("-password");
+    res.send(user);
   }catch(error){
     console.error(error.message);
     res.status(500).send("some error occurred");
