@@ -3,7 +3,7 @@ const app = express()
 const connectToMongo=require('./db');
 const port = 5000;
 connectToMongo();
-
+//for reading req.body
 app.use(express.json())
 //Availaible routes
 app.use('/api/auth/createuser',require('./routes/auth'));
