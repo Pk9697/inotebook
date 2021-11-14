@@ -6,7 +6,8 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const JWT_SECRET='CodeWithHarry';
 const fetchuser=require('../middleware/fetchuser');
-//create a user using:POST "/api/auth/createuser".Doesn't require auth
+
+//ROUTE1: create a user using:POST "/api/auth/createuser".Doesn't require auth
 router.post('/createuser',[
   body('name','Enter a valid name').isLength({ min: 3 }),
     // username must be an email
@@ -52,7 +53,7 @@ router.post('/createuser',[
     }
 })
 
-//authenticate a user using:POST "/api/auth/login"
+//ROUTE2: authenticate a user using:POST "/api/auth/login" .No login required
 router.post('/login',[
   body('email','Enter a valid name').isEmail(),
   body('password','password can not be blank').exists()
@@ -96,7 +97,7 @@ router.post('/login',[
 router.post('/getuser',fetchuser,async (req,res)=>{
   try{
     const userId=req.user.id;
-    const user=await User.findById(userId).select("-password");
+    const user=await User.findById(userId).select("-password");//getuser without password
     res.send(user);
   }catch(error){
     console.error(error.message);
