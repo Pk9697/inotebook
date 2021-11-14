@@ -92,7 +92,7 @@ router.post('/login',[
 })
 
 
-
+ 
 //ROUTE3: GET LOGGEDIN USER DETAILS using: POST "/api/auth/getuser". Login required
 router.post('/getuser',fetchuser,async (req,res)=>{
   try{
