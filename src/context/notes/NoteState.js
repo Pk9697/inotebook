@@ -42,11 +42,16 @@ const NoteState=(props)=>{
         setNotes(notes.concat(note))
       }
       //Delete a note
-
+      const deleteNote=(id)=>{
+        //TODO:API Call
+        console.log("Delete Note with id"+id);
+        const newNotes=notes.filter((note)=>{return note._id!==id})
+        setNotes(newNotes);
+      }
       //Edit a note
 
     return (
-        <NoteContext.Provider value={{notes,setNotes,addNote}}>
+        <NoteContext.Provider value={{notes,addNote,deleteNote}}>
             {props.children}
         </NoteContext.Provider>
     )
