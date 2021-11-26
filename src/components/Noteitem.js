@@ -2,7 +2,7 @@ import React,{useContext} from 'react'
 import noteContext from "../context/notes/noteContext";
 
 const Noteitem = (props) => {
-    const {note}=props;
+    const {note,updateNote}=props;
   const context = useContext(noteContext);
 
     return (
@@ -12,7 +12,7 @@ const Noteitem = (props) => {
                     <h5 className="card-title">{note.title}</h5>
                     <p className="card-text">{note.description}</p>
                     <i className="fas fa-trash-alt mx-2" onClick={()=>{context.deleteNote(note._id)}}></i>
-                    <i className="far fa-edit"></i>
+                    <i className="far fa-edit" onClick={()=>{updateNote(note)}}></i>
                 </div>
             </div>
         </div>
