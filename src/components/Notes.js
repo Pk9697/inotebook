@@ -61,6 +61,8 @@ const Notes = () => {
                       aria-describedby="emailHelp"
                       onChange={onChange}
                       value={note.etitle}
+                      minLength={3}
+                      required
                     />
                     
                   </div>
@@ -75,6 +77,8 @@ const Notes = () => {
                       name="edescription"
                       onChange={onChange}
                       value={note.edescription}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -95,7 +99,7 @@ const Notes = () => {
           </div>
           <div className="modal-footer">
             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+            <button disabled={note.etitle.length<3 || note.edescription.length<5} type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
           </div>
         </div>
       </div>
