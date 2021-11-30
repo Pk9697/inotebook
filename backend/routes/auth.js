@@ -15,6 +15,7 @@ router.post('/createuser',[
   // password must be at least 5 chars long
   body('password','pass must be atleast 5 char').isLength({ min: 5 })
 ],async (req,res)=>{
+    let success=false;
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -26,7 +27,8 @@ router.post('/createuser',[
     try{
     let user=await User.findOne({email:req.body.email});
     if(user){
-      return res.status(400).json({error:"Sorry user with this email already exists"})
+      success=false;
+      return res.status(400).json({success,error:"Sorry user with this email already exists"})
     }
 
     const salt=await bcrypt.genSalt(10);
@@ -43,9 +45,10 @@ router.post('/createuser',[
         }
       }
       const authToken=jwt.sign(data,JWT_SECRET);
-      console.log(authToken);
+      success=true;
+      // console.log(authToken);
       // res.json(user);
-      res.json({authToken});
+      res.json({success,authToken});
     // res.json([]);
     }catch(error){
       console.error(error.message);
