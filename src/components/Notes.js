@@ -2,12 +2,19 @@ import React,{useContext,useEffect, useRef,useState} from "react";
 import noteContext from '../context/notes/noteContext'
 import AddNote from "./AddNote";
 import Noteitem from "./Noteitem";
+import {useNavigate} from 'react-router-dom'
 
 const Notes = (props) => {
     const context=useContext(noteContext);
+    let navigate=useNavigate();
     //cdm-component did mount method using useEffect
     useEffect(() => {
-      context.getNotes()
+      if(localStorage.getItem('token')){
+        context.getNotes()
+        console.log(localStorage.getItem('token'));
+      }else{
+        navigate('/login');
+      }
       // eslint-disable-next-line
     }, [])
     const ref = useRef(null);
@@ -35,7 +42,7 @@ const Notes = (props) => {
     <>
     <AddNote showAlert={props.showAlert}/>
 
-    
+    {/* modal for editing note */}
     <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Launch demo modal
     </button>

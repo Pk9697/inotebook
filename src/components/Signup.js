@@ -19,8 +19,8 @@ const Signup = (props) => {
           if(json.success){
               //save the authToken and redirect
             localStorage.setItem('token',json.authToken);
-            navigate('/');
             props.showAlert("Account created successfully","success");
+            navigate('/');
 
           }else{
             //   alert("Invalid Credentials");
@@ -31,7 +31,8 @@ const Signup = (props) => {
         setcredentials({...credentials,[e.target.name]:e.target.value})
     }
     return (
-        <div className="container">
+        <div className="container mt-2">
+            <h2>Create an account to use iNotebook</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
