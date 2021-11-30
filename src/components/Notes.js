@@ -3,7 +3,7 @@ import noteContext from '../context/notes/noteContext'
 import AddNote from "./AddNote";
 import Noteitem from "./Noteitem";
 
-const Notes = () => {
+const Notes = (props) => {
     const context=useContext(noteContext);
     //cdm-component did mount method using useEffect
     useEffect(() => {
@@ -24,6 +24,7 @@ const Notes = () => {
         e.preventDefault();
         context.editNote(note.id,note.etitle,note.edescription,note.etag);
       refClose.current.click()
+      props.showAlert("Updated Successfully","success");
 
         // context.addNote(note.title,note.description,note.tag);
     }
@@ -32,7 +33,7 @@ const Notes = () => {
     }
   return (
     <>
-    <AddNote/>
+    <AddNote showAlert={props.showAlert}/>
 
     
     <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -109,7 +110,7 @@ const Notes = () => {
     <div className="row my-3">
       <h1>Your notes</h1>
       {context.notes.map((note) => {
-        return <Noteitem key={note._id} updateNote={updateNote} note={note}/>
+        return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
       })}
     </div>
     </>
