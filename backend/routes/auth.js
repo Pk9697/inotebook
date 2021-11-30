@@ -59,6 +59,7 @@ router.post('/login',[
   body('password','password can not be blank').exists()
 
 ],async (req,res)=>{
+  let success=false;
   // Finds the validation errors in this request and wraps them in an object with handy functions
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -73,7 +74,8 @@ router.post('/login',[
 
     const passCompare=await bcrypt.compare(req.body.password,user.password);
     if(!passCompare){
-      return res.status(400).json({error:"Password error"})
+      success=false;
+      return res.status(400).json({success,error:"Password error"})
     }
     const data={
       user:{
@@ -83,7 +85,8 @@ router.post('/login',[
     const authToken=jwt.sign(data,JWT_SECRET);
     console.log(authToken);
     // res.json(user);
-    res.json({authToken});
+    success=true;
+    res.json({success,authToken});
 
   }catch(error){
     console.error(error.message);

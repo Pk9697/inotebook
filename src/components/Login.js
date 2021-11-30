@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
-
+import {useNavigate} from 'react-router-dom'
 const Login = () => {
     const [credentials, setcredentials] = useState({email:"",password:""})
-
+    let navigate=useNavigate();
     const handleSubmit=async (e)=>{
         e.preventDefault();
         //*API Call
@@ -15,6 +15,13 @@ const Login = () => {
           });
           const json= await response.json(); 
           console.log(json);
+          if(json.success){
+              //save the authToken and redirect
+            localStorage.setItem('token',json.authToken);
+            navigate('/');
+          }else{
+              alert("Invalid Credentials");
+          }
     }
 
     const onChange=(e)=>{
